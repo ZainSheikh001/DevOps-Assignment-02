@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Portal</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="/" class="brand">Job Portal</a>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/jobs">Jobs</a>
+          <% if (currentUser && currentUser.id) { %>
+          <a href="/jobs/new">Add Job</a>
+          <a href="/profile">Profile</a>
+          <a href="/auth/logout">Logout</a>
+          <% } else { %>
+          <a href="/auth/register">Register</a>
+          <a href="/auth/login">Login</a>
+          <% } %>
+        </nav>
+      </div>
+    </header>
+    <main class="container main-content">

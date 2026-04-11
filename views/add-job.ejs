@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<section class="form-section">
+  <h1>Add Job</h1>
+  <% if (error) { %>
+  <p class="error"><%= error %></p>
+  <% } %>
+
+  <form method="POST" action="/jobs" class="form-grid">
+    <label>Title</label>
+    <input name="title" value="<%= old.title || '' %>" required />
+
+    <label>Description</label>
+    <textarea name="description" rows="5" required><%= old.description || '' %></textarea>
+
+    <label>Company</label>
+    <input name="company" value="<%= old.company || '' %>" required />
+
+    <label>Location</label>
+    <input name="location" value="<%= old.location || '' %>" required />
+
+    <button class="btn-primary" type="submit">Create Job</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>

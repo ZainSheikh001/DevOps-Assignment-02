@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<article class="card details-card">
+  <h1><%= job.title %></h1>
+  <p class="muted"><%= job.company %> - <%= job.location %></p>
+  <p><%= job.description %></p>
+  <p class="muted">Posted: <%= new Date(job.postedDate).toDateString() %></p>
+
+  <div class="action-row">
+    <a class="btn-secondary" href="/jobs/<%= job._id %>/edit">Edit</a>
+    <form method="POST" action="/jobs/<%= job._id %>?_method=DELETE" onsubmit="return confirm('Delete this job?');">
+      <button class="btn-danger" type="submit">Delete</button>
+    </form>
+    <% if (currentUser && currentUser.id) { %>
+      <% if (hasApplied) { %>
+      <span class="badge">Already Applied</span>
+      <% } else { %>
+      <a class="btn-primary" href="/jobs/<%= job._id %>/apply">Apply Now</a>
+      <% } %>
+    <% } else { %>
+    <a class="btn-primary" href="/auth/login">Login to Apply</a>
+    <% } %>
+  </div>
+</article>
+
+<%- include('partials/footer') %>

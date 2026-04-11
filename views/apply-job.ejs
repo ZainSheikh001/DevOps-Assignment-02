@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+<section class="form-section">
+  <h1>Apply for <%= job.title %></h1>
+  <p class="muted"><%= job.company %> - <%= job.location %></p>
+
+  <% if (error) { %>
+  <p class="error"><%= error %></p>
+  <% } %>
+
+  <form method="POST" action="/jobs/<%= job._id %>/apply" class="form-grid">
+    <label>Cover Letter</label>
+    <textarea name="coverLetter" rows="7" required><%= old.coverLetter || '' %></textarea>
+
+    <button class="btn-primary" type="submit">Submit Application</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>

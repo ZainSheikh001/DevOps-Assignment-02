@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+<section>
+  <h1>All Jobs</h1>
+  <% if (!jobs.length) { %>
+  <p>No job listings available.</p>
+  <% } %>
+  <div class="grid">
+    <% jobs.forEach((job) => { %>
+    <article class="card">
+      <h3><%= job.title %></h3>
+      <p class="muted"><%= job.company %> - <%= job.location %></p>
+      <a class="btn-secondary" href="/jobs/<%= job._id %>">View Details</a>
+    </article>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

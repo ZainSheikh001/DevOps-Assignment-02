@@ -1,0 +1,34 @@
+<%- include('partials/header') %>
+
+<section class="form-section">
+  <h1>My Profile</h1>
+
+  <% if (error) { %>
+  <p class="error"><%= error %></p>
+  <% } %>
+
+  <% if (success) { %>
+  <p class="success"><%= success %></p>
+  <% } %>
+
+  <form method="POST" action="/profile" class="form-grid">
+    <label>Full Name</label>
+    <input name="fullName" value="<%= user.fullName || '' %>" required />
+
+    <label>Email</label>
+    <input value="<%= user.email || '' %>" disabled />
+
+    <label>Bio</label>
+    <textarea name="bio" rows="4"><%= user.bio || '' %></textarea>
+
+    <label>Skills</label>
+    <input name="skills" value="<%= user.skills || '' %>" />
+
+    <label>Location</label>
+    <input name="location" value="<%= user.location || '' %>" />
+
+    <button class="btn-primary" type="submit">Update Profile</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>
