@@ -1,0 +1,40 @@
+﻿version: "3.8"
+
+services:
+  jobportal-db-jenkins:
+    image: mysql:8.0
+    container_name: jobportal-db-jenkins
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: zain1234
+      MYSQL_DATABASE: job_portal_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - jenkins_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pzain1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  jobportal-app-jenkins:
+    image: zainsheikh010/jobportal-app:latest
+    container_name: jobportal-app-jenkins
+    restart: on-failure
+    ports:
+      - "3001:3000"
+    environment:
+      DB_HOST: jobportal-db-jenkins
+      DB_PORT: 3306
+      DB_NAME: job_portal_db
+      DB_USER: root
+      DB_PASSWORD: zain1234
+      DB_DIALECT: mysql
+      SESSION_SECRET: mysecret123
+    depends_on:
+      jobportal-db-jenkins:
+        condition: service_healthy
+
+volumes:
+  jenkins_db_data:
