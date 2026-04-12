@@ -1,4 +1,4 @@
-﻿pipeline {
+pipeline {
     agent any
 
     environment {
@@ -16,7 +16,7 @@
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t /:latest .'
+                sh 'docker build -t ${DOCKERHUB_USER}/${IMAGE_NAME}:latest .'
             }
         }
 
@@ -27,8 +27,8 @@
                     usernameVariable: 'USERNAME',
                     passwordVariable: 'PASSWORD'
                 )]) {
-                    sh 'echo  | docker login -u  --password-stdin'
-                    sh 'docker push /:latest'
+                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                    sh 'docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:latest'
                 }
             }
         }
