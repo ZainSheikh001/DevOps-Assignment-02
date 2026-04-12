@@ -1,35 +1,40 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  db:
+  jobportal-db:
     image: mysql:8.0
     container_name: jobportal-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: zain1234
+      MYSQL_DATABASE: job_portal_db
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pzain1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
-  app:
-    build: .
+  jobportal-app:
+    image: zainsheikh010/jobportal-app:latest
     container_name: jobportal-app
-    restart: always
+    restart: on-failure
     ports:
       - "3000:3000"
     environment:
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_DIALECT=mysql
-      - PORT=3000
-      - SESSION_SECRET=${SESSION_SECRET}
+      DB_HOST: jobportal-db
+      DB_PORT: 3306
+      DB_NAME: job_portal_db
+      DB_USER: root
+      DB_PASSWORD: zain1234
+      DB_DIALECT: mysql
+      SESSION_SECRET: mysecret123
     depends_on:
-      - db
+      jobportal-db:
+        condition: service_healthy
 
 volumes:
   db_data:
